@@ -1,0 +1,10 @@
+# CUDA is the primary language of this repository
+*.cu linguist-language=CUDA
+*.cuh linguist-language=CUDA
+
+# Python is used as orchestration, experimentation and reporting glue
+*.py linguist-detectable=false
+
+# Ignore generated experiment and report artifacts
+reports/** linguist-generated=true
+experiments/** linguist-generated=true

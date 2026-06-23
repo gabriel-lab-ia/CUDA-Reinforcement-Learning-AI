@@ -35,3 +35,7 @@ runs/
 
 # Environment variables
 .env
+
+# Native builds
+build/
+cmake-build-*/
