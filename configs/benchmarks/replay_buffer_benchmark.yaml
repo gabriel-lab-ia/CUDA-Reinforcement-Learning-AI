@@ -1,0 +1,19 @@
+suite: replay-buffer-benchmark
+benchmark_type: replay_buffer_benchmark
+algorithm: replay
+environment_id: null
+backends: [cpu]
+seeds: [0, 1, 2, 3, 4]
+episodes: 25
+device: cpu
+dtype: float32
+mode: smoke
+output_directory: reports/benchmarks
+hyperparameters:
+  capacity: 1000
+  batch_size: 64
+  repeats: 25
+  prioritized: true
+telemetry:
+  enabled: true
+  interval_seconds: 1.0

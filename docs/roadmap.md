@@ -70,6 +70,7 @@ Status: complete
 - [ ] Discounted-return kernel
 - [ ] Advantage-normalization kernel
 - [ ] GAE kernel
+- [x] GAE native CUDA scaffold
 - [ ] Replay-buffer sampling kernel
 - [ ] Batch-preprocessing kernels
 - [ ] Prioritized-replay operations

@@ -1,0 +1,17 @@
+suite: gae-microbenchmark
+benchmark_type: gae_microbenchmark
+algorithm: gae
+environment_id: null
+backends: [torch_cpu, torch_cuda]
+seeds: [0, 1, 2, 3, 4]
+episodes: 25
+device: cpu
+dtype: float32
+mode: smoke
+output_directory: reports/benchmarks
+hyperparameters:
+  rollout_steps: 512
+  repeats: 25
+telemetry:
+  enabled: true
+  interval_seconds: 1.0

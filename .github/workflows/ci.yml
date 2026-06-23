@@ -35,20 +35,91 @@ jobs:
         run: uv run mypy
 
       - name: Pytest
-        run: uv run pytest -v --cov=src/cuda_rl --cov-report=term-missing
+        run: uv run pytest -v -m "not slow and not cuda" --cov=src/cuda_rl --cov-report=term-missing
 
-  native-cuda:
-    name: Native CUDA smoke
+  python-integration:
+    name: Python integration
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure when nvcc exists
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sync dependencies
+        run: uv sync --locked --dev
+
+      - name: Validate benchmark config
+        run: uv run python scripts/run_benchmarks.py --config configs/benchmarks/replay_buffer_benchmark.yaml
+
+      - name: Smoke train CPU
+        run: |
+          uv run python scripts/train_rl.py \
+            --algorithm dqn \
+            --episodes 1 \
+            --evaluation-episodes 1 \
+            --learning-starts 100 \
+            --batch-size 4 \
+            --checkpoint-every 999 \
+            --output-directory /tmp/cuda_rl_ci_smoke \
+            --device cpu
+
+  benchmark-smoke:
+    name: Benchmark smoke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sync dependencies
+        run: uv sync --locked --dev
+
+      - name: Run GAE benchmark smoke
+        run: uv run cuda-rl benchmark --suite ci-gae --type gae_microbenchmark --algorithm gae --backends torch_cpu --seeds 0,1 --episodes 2 --output-directory /tmp/cuda_rl_benchmarks
+
+  docs-validation:
+    name: Docs validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check documented files exist
+        run: |
+          test -f docs/benchmark-methodology.md
+          test -f docs/benchmark-results.md
+          test -f docs/cuda-kernel-validation.md
+          test -f docs/reproducibility.md
+          test -f docs/telemetry.md
+          test -f docs/experiment-lifecycle.md
+          test -f docs/algorithm-maturity.md
+
+  native-cpp:
+    name: Native CMake build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure and build when nvcc exists
         run: |
           if command -v nvcc; then
             cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
             cmake --build build
           else
-            echo "nvcc not available on this runner; skipping native CUDA build."
+            echo "nvcc not available on this runner; native CUDA build not executed."
           fi

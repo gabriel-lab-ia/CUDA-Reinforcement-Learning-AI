@@ -1,0 +1,18 @@
+suite: cartpole-a2c
+benchmark_type: a2c_cartpole
+algorithm: a2c
+environment_id: CartPole-v1
+backends: [cpu, torch_cuda]
+seeds: [0, 1, 2, 3, 4]
+episodes: 500
+device: auto
+dtype: float32
+mode: smoke
+output_directory: reports/benchmarks
+hyperparameters:
+  learning_rate: 0.0003
+  gamma: 0.99
+  n_steps: 5
+telemetry:
+  enabled: true
+  interval_seconds: 1.0

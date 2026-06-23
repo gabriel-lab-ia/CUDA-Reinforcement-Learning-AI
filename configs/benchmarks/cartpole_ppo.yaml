@@ -1,0 +1,21 @@
+suite: cartpole-ppo
+benchmark_type: ppo_cartpole
+algorithm: ppo
+environment_id: CartPole-v1
+backends: [cpu, torch_cuda, sb3]
+seeds: [0, 1, 2, 3, 4]
+episodes: 500
+device: auto
+dtype: float32
+mode: smoke
+output_directory: reports/benchmarks
+hyperparameters:
+  learning_rate: 0.0003
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+baseline:
+  stable_baselines3: true
+telemetry:
+  enabled: true
+  interval_seconds: 1.0

@@ -25,7 +25,7 @@ Thumbs.db
 # Experiment outputs
 experiments/runs/
 reports/figures/*.png
-reports/benchmarks/*.csv
+reports/benchmarks/
 runs/
 
 # Model artifacts
