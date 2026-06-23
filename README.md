@@ -202,11 +202,49 @@ Experiments in this repository should be:
 
 A single successful CUDA execution is treated as an environment validation, not as a scientific benchmark.
 
+## Benchmark status
+
+| Benchmark | Backend | Seeds | Status | Report |
+|---|---|---:|---|---|
+| DQN CartPole | CPU | 5 | Scaffolded | Not executed |
+| DQN CartPole | PyTorch CUDA | 5 | Pending GPU run | Not executed |
+| A2C CartPole | CPU | 5 | Scaffolded | Not executed |
+| PPO math microbenchmark | PyTorch CPU | 5 | Implemented | Generated locally by runner |
+| GAE microbenchmark | PyTorch CPU | 5 | Implemented | Generated locally by runner |
+| Replay buffer benchmark | CPU | 5 | Implemented | Generated locally by runner |
+| Native CUDA GAE | CUDA | - | In development | Not executed |
+
+## Algorithm maturity matrix
+
+| Algorithm | Math | Unit tests | End-to-end training | Multi-seed | Baseline comparison | CUDA kernel |
+|---|---:|---:|---:|---:|---:|---:|
+| REINFORCE | Yes | Partial | Yes, monolith | Pending | Pending | No |
+| DQN | Yes | Partial | Yes, monolith | Pending | Scaffolded | No |
+| Double DQN | Yes | Partial | Yes, monolith | Pending | Scaffolded | No |
+| A2C | Yes | Partial | Yes, monolith | Pending | Pending | No |
+| PPO | Loss/GAE | Yes | Pending | Pending | Scaffolded | No |
+
+## Systems benchmark matrix
+
+| Operation | CPU reference | PyTorch CPU | PyTorch CUDA | Native CUDA | Correctness test | Performance report |
+|---|---:|---:|---:|---:|---:|---:|
+| GAE | Pending | Yes | Skips without CUDA | In development | Yes | Smoke runner |
+| PPO clipped objective | Pending | Yes | Skips without CUDA | No | Yes | Smoke runner |
+| Uniform replay sampling | Yes | N/A | N/A | No | Yes | Smoke runner |
+| Prioritized replay sampling | Yes | N/A | N/A | No | Yes | Smoke runner |
+
 ## Documentation
 
 * [Architecture](docs/architecture.md)
+* [Benchmark methodology](docs/benchmark-methodology.md)
+* [Benchmark results](docs/benchmark-results.md)
+* [CUDA kernel validation](docs/cuda-kernel-validation.md)
 * [Engineering playbook](docs/engineering-playbook.md)
 * [Experiment methodology](docs/experiment-methodology.md)
+* [Reproducibility](docs/reproducibility.md)
+* [Telemetry](docs/telemetry.md)
+* [Experiment lifecycle](docs/experiment-lifecycle.md)
+* [Algorithm maturity](docs/algorithm-maturity.md)
 * [Technical diagnostic](docs/diagnostic.md)
 * [Roadmap](docs/roadmap.md)
 * [Contributing](CONTRIBUTING.md)

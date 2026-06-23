@@ -77,6 +77,12 @@ addopts = [
     "--strict-markers",
     "--strict-config",
 ]
+markers = [
+    "benchmark: benchmark pipeline tests",
+    "cuda: tests that require CUDA hardware",
+    "integration: integration tests",
+    "slow: long-running tests",
+]
 
 [tool.mypy]
 python_version = "3.12"

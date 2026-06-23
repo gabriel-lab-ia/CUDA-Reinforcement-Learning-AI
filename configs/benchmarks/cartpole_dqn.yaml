@@ -1,0 +1,21 @@
+suite: cartpole-dqn
+benchmark_type: dqn_cartpole
+algorithm: dqn
+environment_id: CartPole-v1
+backends: [cpu, torch_cuda, sb3]
+seeds: [0, 1, 2, 3, 4]
+episodes: 500
+device: auto
+dtype: float32
+mode: smoke
+output_directory: reports/benchmarks
+hyperparameters:
+  double_dqn: true
+  learning_rate: 0.0003
+  gamma: 0.99
+  batch_size: 128
+baseline:
+  stable_baselines3: true
+telemetry:
+  enabled: true
+  interval_seconds: 1.0

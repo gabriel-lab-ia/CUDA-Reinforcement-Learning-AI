@@ -16,6 +16,7 @@ add_executable(
     cuda_device_check
     cuda/src/main.cu
     cuda/src/cuda_check.cu
+    cuda/src/gae.cu
 )
 
 target_include_directories(
