@@ -1,0 +1,17 @@
+algorithm: dqn
+environment_id: CartPole-v1
+seed: 42
+total_episodes: 500
+max_steps_per_episode: 1000
+learning_rate: 0.0003
+gamma: 0.99
+hidden_sizes: [256, 256]
+device: auto
+batch_size: 128
+replay_capacity: 100000
+learning_starts: 1000
+target_update_interval: 500
+double_dqn: true
+evaluation_every: 25
+evaluation_episodes: 10
+output_directory: reports/rl

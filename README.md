@@ -9,7 +9,7 @@ This repository explores reinforcement learning from two complementary engineeri
 * **Python and PyTorch** for agent implementation, training orchestration, evaluation, experiment tracking, and visualization.
 * **Native CUDA/C++** for GPU inspection, custom kernels, low-level memory control, parallel computation, and performance analysis.
 
-The project is being developed incrementally. The current version establishes a reproducible CUDA environment and a native CUDA foundation. Reinforcement-learning agents and GPU benchmarks are part of the next development milestones.
+The project is being developed as a research-grade engineering lab. The current version combines a reproducible CUDA environment, native CUDA device validation, first-principles deep RL agents, experiment metrics, local NoSQL persistence utilities, and CI/CD quality gates.
 
 ## Current capabilities
 
@@ -19,20 +19,29 @@ The project is being developed incrementally. The current version establishes a 
 * Native CUDA/C++ compilation with CMake and Ninja
 * NVIDIA GPU and compute-capability inspection
 * CPU/CUDA device resolution in Python
+* REINFORCE, DQN, Double DQN, and A2C training flows for discrete-control Gymnasium environments
+* Checkpointing, deterministic evaluation, CSV/JSON experiment reports, and scalar metric aggregation
+* Local append-only JSONL document store for NoSQL experiment metadata
 * Ruff, Mypy, Pytest, and coverage tooling
+* GitHub Actions quality pipeline
 * Automated tests for device selection and GPU metadata
 * Initial CUDA architecture targeting NVIDIA Ada Lovelace `sm_89`
 
-## Target algorithms
+## Algorithm roadmap
 
-The planned learning sequence is:
+Implemented or scaffolded:
 
 1. REINFORCE
 2. Deep Q-Network
-3. Advantage Actor-Critic
-4. Proximal Policy Optimization
-5. Soft Actor-Critic
-6. Twin Delayed Deep Deterministic Policy Gradient
+3. Double DQN
+4. Advantage Actor-Critic
+
+Next advanced algorithms:
+
+1. Proximal Policy Optimization with generalized advantage estimation
+2. Prioritized experience replay
+3. Soft Actor-Critic
+4. Twin Delayed Deep Deterministic Policy Gradient
 
 Implementations will be developed from first principles and compared with established reference implementations when appropriate.
 
@@ -56,8 +65,11 @@ Native CUDA work will progress from general computational validation toward rein
 .
 ├── cuda/
 │   ├── include/             # Native CUDA/C++ headers
+│   ├── reinforcement_learning.py
 │   └── src/                 # Native CUDA/C++ sources
+├── configs/                 # Reproducible experiment configs
 ├── docs/                    # Architecture and roadmap
+├── .github/workflows/       # CI/CD quality gates
 ├── scripts/                 # Environment checks and experiment entry points
 ├── src/cuda_rl/
 │   ├── agents/              # Reinforcement-learning agents
@@ -66,6 +78,7 @@ Native CUDA work will progress from general computational validation toward rein
 │   ├── metrics/             # Training and performance metrics
 │   ├── models/              # Neural-network models
 │   ├── monitoring/          # GPU and system telemetry
+│   ├── storage/             # Local NoSQL document persistence
 │   └── utils/               # Shared utilities
 ├── tests/                   # Automated Python tests
 ├── CMakeLists.txt
@@ -110,6 +123,26 @@ Validate the PyTorch CUDA environment:
 uv run python scripts/check_cuda.py
 ```
 
+## Train an RL agent
+
+Run the package entry point directly:
+
+```bash
+uv run cuda-rl-train \
+  --algorithm dqn \
+  --env CartPole-v1 \
+  --episodes 500 \
+  --device auto
+```
+
+Or use the script wrapper:
+
+```bash
+uv run python scripts/train_rl.py --algorithm a2c --episodes 300
+```
+
+Experiment outputs are written under `reports/rl/<run-name>/` with `episodes.csv`, `evaluations.csv`, `summary.json`, and checkpoints.
+
 ## Native CUDA build
 
 Configure and compile the native CUDA executable:
@@ -151,12 +184,13 @@ A single successful CUDA execution is treated as an environment validation, not 
 ## Documentation
 
 * [Architecture](docs/architecture.md)
+* [Technical diagnostic](docs/diagnostic.md)
 * [Roadmap](docs/roadmap.md)
 * [Contributing](CONTRIBUTING.md)
 
 ## Status
 
-The project is currently in its infrastructure and native-CUDA foundation phase.
+The project is currently moving from a strong prototype into a modular research platform.
 
 Implemented:
 
@@ -164,11 +198,13 @@ Implemented:
 * CUDA-enabled PyTorch installation
 * native CUDA compilation
 * device inspection
-* initial automated tests
+* REINFORCE, DQN, Double DQN, and A2C prototype training
+* local NoSQL document store
+* automated tests and CI/CD
 
 Next milestone:
 
-* reproducible CPU, PyTorch CUDA, and native CUDA benchmarks
+* split the monolithic training implementation into dedicated package modules and add PPO plus native CUDA RL kernels
 
 ## License
 

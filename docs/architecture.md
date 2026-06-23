@@ -22,8 +22,8 @@ Responsibilities:
 Primary locations:
 
     scripts/
-    experiments/
     configs/
+    reports/
 
 ### Reinforcement-learning layer
 
@@ -48,6 +48,7 @@ Primary locations:
 Responsibilities:
 
 - learning metrics
+- scalar aggregate statistics
 - timing and throughput metrics
 - GPU utilization
 - VRAM consumption
@@ -58,6 +59,20 @@ Primary locations:
 
     src/cuda_rl/metrics/
     src/cuda_rl/monitoring/
+    reports/
+
+### Persistence layer
+
+Responsibilities:
+
+- append-only experiment metadata
+- local NoSQL document persistence
+- compactable JSONL collections
+- storage abstractions that can later be backed by MongoDB, DynamoDB, or object storage
+
+Primary locations:
+
+    src/cuda_rl/storage/
     reports/
 
 ### Native CUDA layer
@@ -91,6 +106,8 @@ Primary locations:
     parameter update and evaluation
         ↓
     metrics and telemetry persistence
+        ↓
+    document-store indexing
 
 ## Native integration strategy
 
@@ -102,7 +119,12 @@ A binding mechanism should only be introduced after the standalone kernel is cor
 
 ## Reproducibility
 
-Every formal experiment should record the algorithm, environment, seed, device, precision, hyperparameters, software versions, GPU metadata, execution time, learning metrics, and systems metrics.
+Every formal experiment should record the algorithm, environment, seed, device, precision, hyperparameters, software versions, GPU metadata, execution time, learning metrics, systems metrics, and document-store identifiers.
+
+## Transitional module strategy
+
+The historical training implementation currently remains in `cuda/reinforcement_learning.py`.
+The package-level module `src/cuda_rl/reinforcement_learning.py` provides a compatibility facade so imports remain stable while the implementation is progressively split into dedicated `agents`, `models`, `evaluation`, `metrics`, and `storage` modules.
 
 ## Validation strategy
 
@@ -110,5 +132,6 @@ Every formal experiment should record the algorithm, environment, seed, device, 
 2. Python behavior validation through Pytest.
 3. Native build and runtime validation through CMake and CUDA.
 4. Numerical and performance validation across CPU and GPU implementations.
+5. GitHub Actions validation on push and pull request.
 
 Performance improvements are accepted only after numerical correctness has been established.

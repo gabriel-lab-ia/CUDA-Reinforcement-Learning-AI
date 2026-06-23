@@ -2,7 +2,7 @@
 
 ## Phase 1 — Repository foundation
 
-Status: in progress
+Status: complete
 
 - [x] Initialize Python 3.12 project with `uv`
 - [x] Lock project dependencies
@@ -13,7 +13,7 @@ Status: in progress
 - [x] Configure native CUDA/C++ build
 - [x] Inspect the CUDA device through the Runtime API
 - [x] Add project documentation
-- [ ] Add continuous integration
+- [x] Add continuous integration
 
 ## Phase 2 — Reproducible compute benchmarks
 
@@ -25,19 +25,19 @@ Status: in progress
 - [ ] Benchmark PyTorch CPU
 - [ ] Benchmark PyTorch CUDA
 - [ ] Benchmark native CUDA
-- [ ] Collect mean, median, standard deviation, and percentiles
+- [x] Collect mean, median, standard deviation, and percentiles
 - [ ] Record GPU memory and telemetry
 - [ ] Export CSV and JSON results
 - [ ] Document benchmark methodology and limitations
 
 ## Phase 3 — REINFORCE from first principles
 
-- [ ] Implement policy network
-- [ ] Implement stochastic action sampling
-- [ ] Implement discounted returns
-- [ ] Implement policy-gradient loss
-- [ ] Add deterministic evaluation
-- [ ] Record reward and loss metrics
+- [x] Implement policy network
+- [x] Implement stochastic action sampling
+- [x] Implement discounted returns
+- [x] Implement policy-gradient loss
+- [x] Add deterministic evaluation
+- [x] Record reward and loss metrics
 - [ ] Compare CPU and CUDA training
 - [ ] Validate multiple random seeds
 - [ ] Document the mathematical derivation
@@ -46,17 +46,17 @@ Status: in progress
 ## Phase 4 — Value-based learning
 
 - [ ] Implement tabular Q-learning baseline
-- [ ] Implement Deep Q-Network
-- [ ] Add target network
-- [ ] Add experience replay
-- [ ] Add epsilon-greedy scheduling
-- [ ] Implement Double DQN
+- [x] Implement Deep Q-Network
+- [x] Add target network
+- [x] Add experience replay
+- [x] Add epsilon-greedy scheduling
+- [x] Implement Double DQN
 - [ ] Implement prioritized experience replay
 - [ ] Benchmark replay-buffer operations
 
 ## Phase 5 — Actor-critic algorithms
 
-- [ ] Implement Advantage Actor-Critic
+- [x] Implement Advantage Actor-Critic
 - [ ] Implement Proximal Policy Optimization
 - [ ] Implement Generalized Advantage Estimation
 - [ ] Implement Soft Actor-Critic
@@ -78,8 +78,9 @@ Status: in progress
 
 ## Phase 7 — Experiment and deployment infrastructure
 
-- [ ] GitHub Actions quality pipeline
-- [ ] Structured experiment configuration
+- [x] GitHub Actions quality pipeline
+- [x] Structured experiment configuration
+- [x] Local NoSQL experiment document store
 - [ ] TensorBoard integration
 - [ ] MLflow integration
 - [ ] Containerized development environment
