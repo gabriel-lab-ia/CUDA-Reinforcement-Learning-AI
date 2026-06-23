@@ -41,9 +41,19 @@ Responsibilities:
 Primary locations:
 
     src/cuda_rl/agents/
+    src/cuda_rl/algorithms/
     src/cuda_rl/models/
+    src/cuda_rl/replay/
     src/cuda_rl/environments/
     src/cuda_rl/evaluation/
+
+Current responsibilities:
+
+- `agents` keeps stable public exports while the monolith is migrated.
+- `algorithms` owns reusable algorithm math such as GAE and PPO losses.
+- `models` owns reusable PyTorch network definitions.
+- `replay` owns uniform and prioritized replay buffers.
+- `evaluation` owns policy evaluation interfaces.
 
 ### Measurement layer
 
@@ -130,7 +140,15 @@ Every formal experiment should record the algorithm, environment, seed, device, 
 ## Transitional module strategy
 
 The historical training implementation currently remains in `cuda/reinforcement_learning.py`.
-The package-level module `src/cuda_rl/reinforcement_learning.py` provides a compatibility facade so imports remain stable while the implementation is progressively split into dedicated `agents`, `models`, `evaluation`, `metrics`, and `storage` modules.
+The package-level module `src/cuda_rl/reinforcement_learning.py` provides a compatibility facade so imports remain stable while the implementation is progressively split into dedicated `agents`, `algorithms`, `models`, `replay`, `evaluation`, `metrics`, and `storage` modules.
+
+The first extracted modules are now active:
+
+- `src/cuda_rl/models/mlp.py`
+- `src/cuda_rl/replay/buffers.py`
+- `src/cuda_rl/algorithms/gae.py`
+- `src/cuda_rl/algorithms/ppo.py`
+- `src/cuda_rl/cli.py`
 
 ## Runtime metadata flow
 

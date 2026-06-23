@@ -51,14 +51,15 @@ Status: complete
 - [x] Add experience replay
 - [x] Add epsilon-greedy scheduling
 - [x] Implement Double DQN
-- [ ] Implement prioritized experience replay
+- [x] Implement prioritized experience replay
 - [ ] Benchmark replay-buffer operations
 
 ## Phase 5 — Actor-critic algorithms
 
 - [x] Implement Advantage Actor-Critic
-- [ ] Implement Proximal Policy Optimization
-- [ ] Implement Generalized Advantage Estimation
+- [x] Implement PPO loss module
+- [x] Implement Generalized Advantage Estimation
+- [ ] Integrate Proximal Policy Optimization into the training loop
 - [ ] Implement Soft Actor-Critic
 - [ ] Implement Twin Delayed DDEG
 - [ ] Add continuous-control environments
@@ -85,6 +86,7 @@ Status: complete
 - [x] Telemetry snapshots
 - [x] Benchmark harness
 - [x] Training report loader
+- [x] High-level CLI scaffold
 - [ ] TensorBoard integration
 - [ ] MLflow integration
 - [ ] Containerized development environment

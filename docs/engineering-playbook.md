@@ -193,3 +193,11 @@ The preferred decomposition of `cuda/reinforcement_learning.py` is:
 5. Move metrics writing and checkpoints into `src/cuda_rl/metrics`.
 6. Move the training orchestration into `src/cuda_rl/training`.
 7. Leave `cuda/reinforcement_learning.py` as a thin compatibility entry point.
+
+Current extraction status:
+
+- Config profiles are extracted into `src/cuda_rl/config`.
+- MLP, policy, value, actor-critic, and Q networks are extracted into `src/cuda_rl/models`.
+- Uniform and prioritized replay buffers are extracted into `src/cuda_rl/replay`.
+- GAE and PPO loss math are extracted into `src/cuda_rl/algorithms`.
+- CLI, benchmark, registry, telemetry, and reports are extracted into package modules.

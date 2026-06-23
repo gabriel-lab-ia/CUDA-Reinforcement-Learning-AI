@@ -1,4 +1,4 @@
-from cuda_rl.reinforcement_learning import (
+from cuda_rl.models.mlp import (
     ActorCriticNetwork,
     PolicyNetwork,
     QNetwork,

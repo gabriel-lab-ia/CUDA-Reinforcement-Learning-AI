@@ -21,6 +21,8 @@ The project is being developed as a research-grade engineering lab. The current 
 * NVIDIA GPU and compute-capability inspection
 * CPU/CUDA device resolution in Python
 * REINFORCE, DQN, Double DQN, and A2C training flows for discrete-control Gymnasium environments
+* PPO loss and Generalized Advantage Estimation modules for the next training backend
+* Uniform replay buffer and Prioritized Experience Replay implementation
 * Checkpointing, deterministic evaluation, CSV/JSON experiment reports, benchmark summaries, and scalar metric aggregation
 * Local append-only JSONL document store for NoSQL experiment metadata
 * Typed experiment profiles, run lifecycle registry, telemetry snapshots, and report loading utilities
@@ -75,6 +77,7 @@ Native CUDA work will progress from general computational validation toward rein
 ├── scripts/                 # Environment checks and experiment entry points
 ├── src/cuda_rl/
 │   ├── agents/              # Reinforcement-learning agents
+│   ├── algorithms/          # PPO, GAE, and algorithm-specific math
 │   ├── benchmarks/          # Benchmark harness and timing summaries
 │   ├── config/              # Typed experiment profiles
 │   ├── environments/        # Environment construction and wrappers
@@ -83,6 +86,7 @@ Native CUDA work will progress from general computational validation toward rein
 │   ├── metrics/             # Training and performance metrics
 │   ├── models/              # Neural-network models
 │   ├── monitoring/          # GPU and system telemetry
+│   ├── replay/              # Uniform and prioritized replay buffers
 │   ├── reports/             # Training-report loaders and renderers
 │   ├── storage/             # Local NoSQL document persistence
 │   └── utils/               # Shared utilities
@@ -141,10 +145,20 @@ uv run python scripts/train_rl.py \
   --device auto
 ```
 
+Use the higher-level CLI for profile inspection, registry work, reports, and
+future training orchestration:
+
+```bash
+uv run python scripts/cuda_rl_cli.py profile configs/experiments/cartpole_a2c.json
+uv run python scripts/cuda_rl_cli.py report reports/rl/<run-name>
+uv run python scripts/cuda_rl_cli.py train -- --algorithm dqn --episodes 10
+```
+
 When the project is installed as a package, the console entry point is also
 available:
 
 ```bash
+uv run cuda-rl profile configs/experiments/cartpole_a2c.json
 uv run cuda-rl-train --algorithm a2c --episodes 300
 ```
 
@@ -208,6 +222,7 @@ Implemented:
 * native CUDA compilation
 * device inspection
 * REINFORCE, DQN, Double DQN, and A2C prototype training
+* PPO/GAE algorithm math and prioritized replay modules
 * local NoSQL document store
 * typed experiment profiles, registry, telemetry, benchmark harness, and report loading
 * automated tests and CI/CD
