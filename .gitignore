@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Experiment outputs
+experiments/runs/
+reports/figures/*.png
+reports/benchmarks/*.csv
+runs/
+
+# Model artifacts
+*.pt
+*.pth
+*.onnx
+
+# Environment variables
+.env
