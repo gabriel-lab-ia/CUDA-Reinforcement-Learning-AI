@@ -24,6 +24,9 @@ dependencies = [
 [project.scripts]
 cuda-rl-train = "cuda_rl.reinforcement_learning:main"
 
+[tool.uv]
+package = true
+
 [tool.uv.sources]
 torch = [
     { index = "pytorch-cu130", marker = "sys_platform == 'linux'" },

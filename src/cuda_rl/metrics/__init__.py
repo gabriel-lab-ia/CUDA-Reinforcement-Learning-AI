@@ -1,3 +1,4 @@
+from cuda_rl.metrics.aggregates import ScalarSummary, summarize_scalars
 from cuda_rl.reinforcement_learning import (
     CheckpointManager,
     EpisodeMetrics,
@@ -10,4 +11,6 @@ __all__ = [
     "EpisodeMetrics",
     "EvaluationMetrics",
     "MetricsWriter",
+    "ScalarSummary",
+    "summarize_scalars",
 ]

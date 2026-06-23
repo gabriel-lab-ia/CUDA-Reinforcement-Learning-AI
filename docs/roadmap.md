@@ -81,6 +81,10 @@ Status: complete
 - [x] GitHub Actions quality pipeline
 - [x] Structured experiment configuration
 - [x] Local NoSQL experiment document store
+- [x] Experiment registry and lifecycle metadata
+- [x] Telemetry snapshots
+- [x] Benchmark harness
+- [x] Training report loader
 - [ ] TensorBoard integration
 - [ ] MLflow integration
 - [ ] Containerized development environment

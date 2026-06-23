@@ -24,6 +24,8 @@ Primary locations:
     scripts/
     configs/
     reports/
+    src/cuda_rl/config/
+    src/cuda_rl/experiments/
 
 ### Reinforcement-learning layer
 
@@ -54,11 +56,15 @@ Responsibilities:
 - VRAM consumption
 - temperature and power telemetry
 - result serialization
+- benchmark execution
+- report loading and markdown rendering
 
 Primary locations:
 
     src/cuda_rl/metrics/
     src/cuda_rl/monitoring/
+    src/cuda_rl/benchmarks/
+    src/cuda_rl/reports/
     reports/
 
 ### Persistence layer
@@ -125,6 +131,20 @@ Every formal experiment should record the algorithm, environment, seed, device, 
 
 The historical training implementation currently remains in `cuda/reinforcement_learning.py`.
 The package-level module `src/cuda_rl/reinforcement_learning.py` provides a compatibility facade so imports remain stable while the implementation is progressively split into dedicated `agents`, `models`, `evaluation`, `metrics`, and `storage` modules.
+
+## Runtime metadata flow
+
+    typed profile
+        ↓
+    experiment registry
+        ↓
+    training entry point
+        ↓
+    CSV/JSON metrics
+        ↓
+    JSONL document store
+        ↓
+    training report loader
 
 ## Validation strategy
 

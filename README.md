@@ -21,8 +21,9 @@ The project is being developed as a research-grade engineering lab. The current 
 * NVIDIA GPU and compute-capability inspection
 * CPU/CUDA device resolution in Python
 * REINFORCE, DQN, Double DQN, and A2C training flows for discrete-control Gymnasium environments
-* Checkpointing, deterministic evaluation, CSV/JSON experiment reports, and scalar metric aggregation
+* Checkpointing, deterministic evaluation, CSV/JSON experiment reports, benchmark summaries, and scalar metric aggregation
 * Local append-only JSONL document store for NoSQL experiment metadata
+* Typed experiment profiles, run lifecycle registry, telemetry snapshots, and report loading utilities
 * Ruff, Mypy, Pytest, and coverage tooling
 * GitHub Actions quality pipeline
 * Automated tests for device selection and GPU metadata
@@ -74,11 +75,15 @@ Native CUDA work will progress from general computational validation toward rein
 ├── scripts/                 # Environment checks and experiment entry points
 ├── src/cuda_rl/
 │   ├── agents/              # Reinforcement-learning agents
+│   ├── benchmarks/          # Benchmark harness and timing summaries
+│   ├── config/              # Typed experiment profiles
 │   ├── environments/        # Environment construction and wrappers
 │   ├── evaluation/          # Policy evaluation
+│   ├── experiments/         # Run registry and lifecycle metadata
 │   ├── metrics/             # Training and performance metrics
 │   ├── models/              # Neural-network models
 │   ├── monitoring/          # GPU and system telemetry
+│   ├── reports/             # Training-report loaders and renderers
 │   ├── storage/             # Local NoSQL document persistence
 │   └── utils/               # Shared utilities
 ├── tests/                   # Automated Python tests
@@ -126,20 +131,21 @@ uv run python scripts/check_cuda.py
 
 ## Train an RL agent
 
-Run the package entry point directly:
+Run the script wrapper:
 
 ```bash
-uv run cuda-rl-train \
+uv run python scripts/train_rl.py \
   --algorithm dqn \
   --env CartPole-v1 \
   --episodes 500 \
   --device auto
 ```
 
-Or use the script wrapper:
+When the project is installed as a package, the console entry point is also
+available:
 
 ```bash
-uv run python scripts/train_rl.py --algorithm a2c --episodes 300
+uv run cuda-rl-train --algorithm a2c --episodes 300
 ```
 
 Experiment outputs are written under `reports/rl/<run-name>/` with `episodes.csv`, `evaluations.csv`, `summary.json`, and checkpoints.
@@ -185,6 +191,8 @@ A single successful CUDA execution is treated as an environment validation, not 
 ## Documentation
 
 * [Architecture](docs/architecture.md)
+* [Engineering playbook](docs/engineering-playbook.md)
+* [Experiment methodology](docs/experiment-methodology.md)
 * [Technical diagnostic](docs/diagnostic.md)
 * [Roadmap](docs/roadmap.md)
 * [Contributing](CONTRIBUTING.md)
@@ -201,6 +209,7 @@ Implemented:
 * device inspection
 * REINFORCE, DQN, Double DQN, and A2C prototype training
 * local NoSQL document store
+* typed experiment profiles, registry, telemetry, benchmark harness, and report loading
 * automated tests and CI/CD
 
 Next milestone:

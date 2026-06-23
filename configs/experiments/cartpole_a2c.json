@@ -1,0 +1,25 @@
+{
+  "name": "cartpole-a2c-baseline",
+  "algorithm": "a2c",
+  "environment_id": "CartPole-v1",
+  "seed": 43,
+  "device": "auto",
+  "tags": ["baseline", "actor-critic"],
+  "schedule": {
+    "total_episodes": 500,
+    "evaluation_every": 25,
+    "checkpoint_every": 50,
+    "reward_window": 100
+  },
+  "resource_budget": {
+    "max_wall_time_minutes": 60,
+    "max_checkpoints": 5
+  },
+  "hyperparameters": {
+    "learning_rate": 0.0003,
+    "gamma": 0.99,
+    "n_steps": 5,
+    "entropy_coefficient": 0.01,
+    "value_loss_coefficient": 0.5
+  }
+}

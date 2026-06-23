@@ -1,0 +1,24 @@
+{
+  "name": "cartpole-reinforce-baseline",
+  "algorithm": "reinforce",
+  "environment_id": "CartPole-v1",
+  "seed": 41,
+  "device": "auto",
+  "tags": ["baseline", "policy-gradient"],
+  "schedule": {
+    "total_episodes": 700,
+    "evaluation_every": 25,
+    "checkpoint_every": 50,
+    "reward_window": 100
+  },
+  "resource_budget": {
+    "max_wall_time_minutes": 60,
+    "max_checkpoints": 5
+  },
+  "hyperparameters": {
+    "learning_rate": 0.0003,
+    "gamma": 0.99,
+    "normalize_returns": true,
+    "entropy_coefficient": 0.01
+  }
+}
