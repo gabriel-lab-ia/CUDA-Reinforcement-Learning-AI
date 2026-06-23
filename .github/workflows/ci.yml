@@ -89,7 +89,7 @@ jobs:
         run: uv sync --locked --dev
 
       - name: Run GAE benchmark smoke
-        run: uv run cuda-rl benchmark --suite ci-gae --type gae_microbenchmark --algorithm gae --backends torch_cpu --seeds 0,1 --episodes 2 --output-directory /tmp/cuda_rl_benchmarks
+        run: .venv/bin/python scripts/cuda_rl_cli.py benchmark --suite ci-gae --type gae_microbenchmark --algorithm gae --backends torch_cpu --seeds 0,1 --episodes 2 --output-directory /tmp/cuda_rl_benchmarks
 
   docs-validation:
     name: Docs validation
