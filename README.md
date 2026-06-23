@@ -1,5 +1,4 @@
 # CUDA-Reinforcement-Learning-AI
-# CUDA Reinforcement Learning AI
 
 CUDA-accelerated reinforcement learning laboratory combining native CUDA/C++ kernels, PyTorch agents, reproducible benchmarks, GPU telemetry, and documented experiments.
 
