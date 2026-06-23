@@ -1,7 +1,7 @@
 [project]
 name = "cuda-reinforcement-learning-ai"
 version = "0.1.0"
-description = "Add your description here"
+description = "CUDA-accelerated reinforcement learning laboratory with native CUDA kernels, PyTorch agents, reproducible benchmarks, GPU telemetry, and documented experiments."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
