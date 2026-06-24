@@ -6,6 +6,7 @@ from pathlib import Path
 
 from cuda_rl.benchmarks.aggregation import aggregate_runs
 from cuda_rl.benchmarks.config import load_benchmark_config
+from cuda_rl.benchmarks.formal import run_formal_benchmark
 from cuda_rl.benchmarks.hardware import capture_benchmark_metadata
 from cuda_rl.benchmarks.microbenchmarks import run_microbenchmark
 from cuda_rl.benchmarks.reporting import write_comparison_report, write_figures
@@ -25,6 +26,8 @@ def run_benchmark_config(path: Path | str) -> Path:
 
 def run_benchmark(config: BenchmarkConfig) -> Path:
     config.validate()
+    if config.benchmark_type.startswith("formal_"):
+        return run_formal_benchmark(config)
     timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     output_directory = Path(config.output_directory) / config.suite / timestamp
     metadata = capture_benchmark_metadata(config, timestamp=timestamp)

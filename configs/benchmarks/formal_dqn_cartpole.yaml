@@ -1,0 +1,27 @@
+suite: formal-dqn-cartpole
+benchmark_type: formal_dqn_cartpole
+algorithm: dqn
+environment_id: CartPole-v1
+backends: [cpu, torch_cuda]
+seeds: [0, 1, 2, 3, 4]
+episodes: 500
+device: auto
+dtype: float32
+mode: formal
+output_directory: reports/benchmarks
+warmup_repetitions: 0
+measured_repetitions: 1
+synchronize_cuda: true
+measure_end_to_end: true
+reference_backend: cpu
+fail_on_unavailable_backend: true
+record_raw_samples: true
+hyperparameters:
+  gamma: 0.99
+  learning_rate: 0.0003
+  evaluation_interval_episodes: 25
+  evaluation_episodes: 10
+  thresholds: "100,200,300,400,475"
+telemetry:
+  enabled: true
+  interval_seconds: 1.0
