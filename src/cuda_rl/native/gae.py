@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from importlib import import_module
 from types import ModuleType
+from typing import cast
 
 import torch
 
@@ -39,13 +40,16 @@ def compute_gae_native(
         next_values=next_values,
     )
     extension = _load_extension()
-    return extension.compute_gae_native(
-        rewards,
-        values,
-        dones,
-        float(gamma),
-        float(gae_lambda),
-        next_values,
+    return cast(
+        tuple[torch.Tensor, torch.Tensor],
+        extension.compute_gae_native(
+            rewards,
+            values,
+            dones,
+            float(gamma),
+            float(gae_lambda),
+            next_values,
+        ),
     )
 
 
