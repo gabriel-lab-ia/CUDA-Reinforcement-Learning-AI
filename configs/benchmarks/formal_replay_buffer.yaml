@@ -1,0 +1,24 @@
+suite: formal-replay-buffer
+benchmark_type: formal_replay_buffer
+algorithm: replay
+environment_id: null
+backends: [cpu]
+seeds: [0, 1, 2, 3, 4]
+episodes: 1
+device: cpu
+dtype: float32
+mode: formal
+output_directory: reports/benchmarks
+warmup_repetitions: 50
+measured_repetitions: 200
+synchronize_cuda: false
+measure_end_to_end: true
+reference_backend: null
+fail_on_unavailable_backend: true
+record_raw_samples: true
+parameter_grid:
+  capacity: [10000, 100000, 1000000]
+  batch_size: [32, 64, 256, 1024]
+telemetry:
+  enabled: true
+  interval_seconds: 1.0

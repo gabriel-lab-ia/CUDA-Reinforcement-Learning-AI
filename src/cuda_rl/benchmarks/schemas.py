@@ -6,9 +6,17 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Literal
 
-BenchmarkBackend = Literal["cpu", "torch_cpu", "torch_cuda", "native_cuda", "sb3"]
+BenchmarkBackend = Literal[
+    "cpu",
+    "numpy",
+    "torch_cpu",
+    "torch_cuda",
+    "native_cuda",
+    "sb3",
+]
 BenchmarkMode = Literal["smoke", "formal"]
 BenchmarkStatus = Literal["executed", "skipped", "not_available", "failed"]
+GridValue = int | float | str | bool
 
 
 @dataclass(frozen=True, slots=True)
@@ -31,6 +39,14 @@ class BenchmarkConfig:
     mode: BenchmarkMode = "smoke"
     output_directory: str = "reports/benchmarks"
     hyperparameters: dict[str, int | float | str | bool] = field(default_factory=dict)
+    warmup_repetitions: int = 3
+    measured_repetitions: int = 10
+    synchronize_cuda: bool = True
+    measure_end_to_end: bool = False
+    reference_backend: str | None = None
+    fail_on_unavailable_backend: bool = False
+    record_raw_samples: bool = True
+    parameter_grid: dict[str, tuple[GridValue, ...]] = field(default_factory=dict)
     telemetry: TelemetrySettings = field(default_factory=TelemetrySettings)
 
     def validate(self) -> None:
@@ -46,10 +62,17 @@ class BenchmarkConfig:
             raise ValueError("at least one seed is required.")
         if self.episodes <= 0:
             raise ValueError("episodes must be positive.")
-        if self.mode == "formal" and len(self.seeds) < 10:
-            raise ValueError("formal benchmark reports require at least 10 seeds.")
+        if self.warmup_repetitions < 0:
+            raise ValueError("warmup_repetitions cannot be negative.")
+        if self.measured_repetitions <= 0:
+            raise ValueError("measured_repetitions must be positive.")
         if self.mode == "smoke" and len(self.seeds) < 1:
             raise ValueError("smoke benchmark requires at least one seed.")
+        for key, values in self.parameter_grid.items():
+            if not key:
+                raise ValueError("parameter_grid keys cannot be empty.")
+            if not values:
+                raise ValueError(f"parameter_grid {key!r} must not be empty.")
 
 
 @dataclass(frozen=True, slots=True)
@@ -121,6 +144,32 @@ class BenchmarkAggregate:
     mean_steps_per_second: float | None
     variance_between_seeds: float | None
     coefficient_of_variation: float | None
+
+    def to_row(self) -> dict[str, object]:
+        return asdict(self)
+
+
+@dataclass(frozen=True, slots=True)
+class RawBenchmarkSample:
+    suite: str
+    benchmark_type: str
+    algorithm: str
+    workload_id: str
+    operation: str
+    backend: str
+    seed: int
+    repetition: int
+    warmup: bool
+    status: str
+    latency_ms: float | None
+    throughput: float | None
+    throughput_unit: str
+    device: str
+    dtype: str
+    shape: str | None
+    batch_size: int | None
+    parameters_json: str
+    error: str | None = None
 
     def to_row(self) -> dict[str, object]:
         return asdict(self)

@@ -5,6 +5,7 @@ import json
 import sys
 from pathlib import Path
 
+from cuda_rl.benchmarks.campaign import run_benchmark_campaign
 from cuda_rl.benchmarks.config import benchmark_config_from_mapping
 from cuda_rl.benchmarks.runner import run_benchmark
 from cuda_rl.config import load_experiment_profile
@@ -52,6 +53,12 @@ def build_parser() -> argparse.ArgumentParser:
     benchmark.add_argument("--type", default="gae_microbenchmark")
     benchmark.add_argument("--algorithm", default="gae")
     benchmark.add_argument("--output-directory", default="reports/benchmarks")
+
+    campaign = subcommands.add_parser(
+        "benchmark-campaign",
+        help="Run multiple benchmark config files as one campaign.",
+    )
+    campaign.add_argument("--configs", nargs="+", type=Path, required=True)
     return parser
 
 
@@ -94,6 +101,10 @@ def main(argv: list[str] | None = None) -> None:
             )
         )
         print(output_directory)
+    elif args.command == "benchmark-campaign":
+        exit_code, campaign_directory = run_benchmark_campaign(args.configs)
+        print(campaign_directory)
+        raise SystemExit(exit_code)
     else:
         raise SystemExit(f"Unsupported command: {args.command}")
 
