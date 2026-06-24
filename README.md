@@ -206,6 +206,23 @@ A single successful CUDA execution is treated as an environment validation, not 
 
 Formal campaign implemented -- awaiting execution on target hardware.
 
+Formal benchmark suites:
+
+| Suite | Config | Backends | Seeds | Repetitions | Evidence status |
+|---|---|---|---:|---:|---|
+| GAE | `configs/benchmarks/formal_gae.yaml` | NumPy CPU, PyTorch CPU, PyTorch CUDA, native CUDA if bound | 5 | 50 warm-up + 200 measured | Awaiting formal execution |
+| PPO clipped objective | `configs/benchmarks/formal_ppo_loss.yaml` | PyTorch CPU, PyTorch CUDA | 5 | 50 warm-up + 200 measured | Awaiting formal execution |
+| Replay buffer | `configs/benchmarks/formal_replay_buffer.yaml` | Uniform CPU, prioritized CPU | 5 | 50 warm-up + 200 measured | Awaiting formal execution |
+| DQN CartPole-v1 | `configs/benchmarks/formal_dqn_cartpole.yaml` | CPU, PyTorch CUDA | 5 | End-to-end training campaign | Adapter scaffolded, not published |
+| A2C CartPole-v1 | `configs/benchmarks/formal_a2c_cartpole.yaml` | CPU, PyTorch CUDA | 5 | End-to-end training campaign | Adapter scaffolded, not published |
+
+Each formal run writes raw samples, aggregate statistics, correctness checks,
+failures, tables, plots, metadata, and environment capture under:
+
+```text
+reports/benchmarks/<suite>/<timestamp>/
+```
+
 The formal benchmark campaign is configured separately from smoke tests:
 
 ```bash
@@ -243,10 +260,10 @@ runner. Native CUDA GAE is marked unavailable unless a Python binding exists.
 
 | Operation | CPU reference | PyTorch CPU | PyTorch CUDA | Native CUDA | Correctness test | Performance report |
 |---|---:|---:|---:|---:|---:|---:|
-| GAE | Pending | Yes | Skips without CUDA | In development | Yes | Smoke runner |
-| PPO clipped objective | Pending | Yes | Skips without CUDA | No | Yes | Smoke runner |
-| Uniform replay sampling | Yes | N/A | N/A | No | Yes | Smoke runner |
-| Prioritized replay sampling | Yes | N/A | N/A | No | Yes | Smoke runner |
+| GAE | NumPy | Yes | Fails or records unavailable without CUDA | Unavailable until Python binding exists | Yes | Formal runner |
+| PPO clipped objective | PyTorch CPU | Yes | Fails or records unavailable without CUDA | No | Yes | Formal runner |
+| Uniform replay sampling | Yes | N/A | N/A | No | Yes | Formal runner |
+| Prioritized replay sampling | Yes | N/A | N/A | No | Yes | Formal runner |
 
 ## Documentation
 
