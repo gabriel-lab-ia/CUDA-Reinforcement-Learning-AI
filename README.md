@@ -1,5 +1,6 @@
 # CUDA-Reinforcement-Learning-AI
-<img width="1774" height="887" alt="ChatGPT Image 23 de jun  de 2026, 16_44_37" src="https://github.com/user-attachments/assets/de5aa2ff-e19c-4214-9fdf-ef5427401d49" />
+<img width="1200" height="675" alt="image" src="https://github.com/user-attachments/assets/c9f29935-efc7-48aa-900c-c50fbb4be4b8" />
+
 
 CUDA-accelerated reinforcement learning laboratory combining native CUDA/C++ kernels, PyTorch agents, reproducible benchmarks, GPU telemetry, and documented experiments.
 
